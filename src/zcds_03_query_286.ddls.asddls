@@ -20,6 +20,7 @@ as projection on ZCDS_R_INCIDENT_286
     LastChangedAt,
     /* Associations */
     _Priority,
-    _Status,
-    _History : redirected to composition child ZCDS_04_CHILD_286 // Make association public
+    _Status
+    //,
+    //_History : redirected to composition child ZCDS_04_CHILD_286 // Make association public
 }

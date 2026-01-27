@@ -1,0 +1,46 @@
+@Metadata.layer: #CORE
+@UI: { headerInfo: { typeName: 'Incident',
+                     typeNamePlural: 'Incidents',
+                     title: { type: #STANDARD,
+                              value: 'IncidentId'  } } ,
+
+       presentationVariant: [{ sortOrder: [{ by : 'IncidentId',
+                                             direction: #DESC }],
+                               visualizations: [{ type: #AS_LINEITEM }] }] }
+
+annotate entity ZCDS_C_INCIDENT_286 with
+{
+  @UI.lineItem: [{ position: 10,
+                   importance: #HIGH,
+                   label: 'Incident ID' }]
+  @UI.selectionField: [{ position: 10 }]
+  IncidentId;
+
+  @UI.lineItem: [{ position: 20,
+                   importance: #HIGH,
+                   label: 'Incident Description' }]
+  @UI.selectionField: [{ position: 20 }]
+  Description;
+
+  @UI.lineItem: [{ position: 30,
+                   importance: #HIGH,
+                   label: 'Incident Status' }]
+  @UI.selectionField: [{ position: 30 }]
+  Status;
+  @UI.lineItem: [{ position: 40,
+                   importance: #HIGH,
+                   label: 'Incident Priority' }]
+  @UI.selectionField: [{ position: 40 }]
+  Priority;
+
+  @UI.lineItem: [{ position: 50,
+                   importance: #MEDIUM,
+                   label: 'Creation Date' }]
+  @UI.selectionField: [{ position: 50 }]
+  CreationDate;
+  @UI.lineItem: [{ position: 60,
+                   importance: #MEDIUM,
+                   label: 'Changed Date' }]
+  @UI.selectionField: [{ position: 60 }]
+  ChangedDate;
+}

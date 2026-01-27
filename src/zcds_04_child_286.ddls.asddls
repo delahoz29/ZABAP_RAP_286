@@ -18,6 +18,6 @@ as projection on  ZCDS_01_History_286
     /* Associations */
     _Status,
     _StatusNew,
-    _Incident : redirected to parent zcds_03_Query_286 
+   _Incident : redirected to parent ZCDS_C_INCIDENT_286 
       
 }
