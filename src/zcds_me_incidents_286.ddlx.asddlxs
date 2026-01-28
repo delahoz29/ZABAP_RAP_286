@@ -15,7 +15,9 @@ annotate entity ZCDS_C_INCIDENT_286 with
                 type: #IDENTIFICATION_REFERENCE,
                 label: 'Incident Master Data',
                 position: 10 }]
-  IncUuid;
+  @Consumption.valueHelpDefinition: [{ entity: { name: 'ZCDS_INCUUID_VH',
+                                                 element: 'IncUuid'}  }]
+  Incuuid;
   @UI.lineItem: [{ position: 10,
                    importance: #HIGH,
                    label: 'Incident ID' }]
