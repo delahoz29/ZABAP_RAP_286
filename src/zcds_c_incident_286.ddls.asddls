@@ -11,11 +11,13 @@ define root view entity ZCDS_C_INCIDENT_286
       @Search.defaultSearchElement: true
         @Search.fuzzinessThreshold: 0.8
       @Search.ranking: #HIGH
+      @ObjectModel.text.element: [ 'IncidentId' ]
       IncidentId,
       Title,
        @Search.defaultSearchElement: true
          @Search.fuzzinessThreshold: 0.8
       @Search.ranking: #MEDIUM
+      @ObjectModel.text.element: [ 'Description' ]
       Description,
       @Search.defaultSearchElement: true
       @Search.fuzzinessThreshold: 0.8

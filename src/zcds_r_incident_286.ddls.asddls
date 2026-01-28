@@ -5,15 +5,17 @@ define root view entity ZCDS_R_INCIDENT_286
 as select from zdt_inct_286
 composition  [0..*] of ZCDS_01_History_286 as _History 
 
-association [1..1] to zdt_status_286 as _Status on _Status.status_code = $projection.Status
-association [1..1] to zdt_priority_286 as _Priority on _Priority.priority_code = $projection.Priority
+association [1..1] to zdt_status_286 as _Status on $projection.Status = _Status.status_code 
+association [1..1] to zdt_priority_286 as _Priority on  $projection.Priority = _Priority.priority_code 
 {
     key inc_uuid as IncUuid,
     incident_id as IncidentId,
     title as Title,
     description as Description,
-    status as Status,
-    priority as Priority,
+    _Status.status_code as Status,
+    //status as Status,
+    _Priority.priority_code as Priority,
+    //priority as Priority,
     creation_date as CreationDate,
     changed_date as ChangedDate,
     @Semantics.user.createdBy: true
