@@ -12,8 +12,39 @@ authorization master ( global, instance )
   create ( authorization : global );
   update;
   delete;
-  field ( readonly ) IncUuid;
+  field ( numbering : managed, readonly ) IncUuid;
+  field ( readonly ) IncidentId,
+  LastChangedAt,
+  LocalCreatedAt,
+  LocalCreatedBy,
+  LocalLastChangedAt,
+  LocalLastChangedBy;
+  field ( mandatory ) Description, Priority, Status, CreationDate, ChangedDate;
+
+
   association _History { create; }
+
+  action ( features : instance, authorization : update ) NewStatus parameter zcds_ae_incidents_286 result [1] $self;
+
+  internal action ChangeStatus;
+
+  validation validateStatus on save { create; field Status; }
+  validation validatePriority on save { create; field Priority; }
+  validation validateRange on save { create; field CreationDate, ChangedDate; }
+
+  determination setIncidentNumber on save { create; }
+  determination setStatusOpen on modify { create; }
+
+  determine action validateStatusCode { validation validateStatus; }
+  determine action validatePriorityCode { validation validatePriority; }
+  determine action validateDates { validation validateRange; }
+
+  side effects {
+    determine action validateStatusCode executed on field Status affects messages;
+    determine action validatePriorityCode executed on field Priority affects messages;
+    determine action validateDates executed on field CreationDate, field ChangedDate affects messages;
+
+  }
 
   mapping for zdt_inct_286
     {
