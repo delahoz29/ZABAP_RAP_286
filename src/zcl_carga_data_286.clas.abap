@@ -18,7 +18,7 @@ CLASS zcl_carga_data_286 IMPLEMENTATION.
   METHOD if_oo_adt_classrun~main.
 
     DELETE FROM zdt_status286.
-    DELETE FROM zdt_priority_286.
+    DELETE FROM zdt_priority286.
 
     lt_status = VALUE #(
         ( status_code = 'OP' status_description = 'Open' )
@@ -44,7 +44,7 @@ CLASS zcl_carga_data_286 IMPLEMENTATION.
     ( priority_code = 'H' priority_description = 'High' )
   ).
 
-    INSERT zdt_priority_286 FROM TABLE @lt_priority.
+    INSERT zdt_priority286 FROM TABLE @lt_priority.
 
     IF sy-subrc EQ 0.
       out->write( | Total prioridades cargados satisfactoriamente: { sy-dbcnt } .| ).

@@ -293,7 +293,7 @@ CLASS lhc_Incident IMPLEMENTATION.
         APPEND VALUE #( %tky        = incident-%tky
                         %state_area = 'VALIDATE_PRIORITY'
                         %msg        = NEW zcl_mensajes_286( textid   = zcl_mensajes_286=>priority_unkown
-                                                                   severity =  if_abap_behv_message=>severity-error )
+                                                            severity =  if_abap_behv_message=>severity-error )
                         %element-Priority =  if_abap_behv=>mk-on
                        ) TO reported-incident.
       ENDIF.
