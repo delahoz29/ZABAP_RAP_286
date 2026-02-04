@@ -20,7 +20,73 @@ CLASS zcl_mensajes_286 DEFINITION
         attr2 TYPE scx_attrname VALUE '',
         attr3 TYPE scx_attrname VALUE '',
         attr4 TYPE scx_attrname VALUE '',
-      END OF incident_unkown.
+      END OF incident_unkown,
+
+      BEGIN OF not_authorized,
+        msgid TYPE symsgid VALUE 'ZCM_INCIDENT',
+        msgno TYPE symsgno VALUE '002',
+        attr1 TYPE scx_attrname VALUE '',
+        attr2 TYPE scx_attrname VALUE '',
+        attr3 TYPE scx_attrname VALUE '',
+        attr4 TYPE scx_attrname VALUE '',
+      END OF not_authorized,
+
+      BEGIN OF enter_priority,
+        msgid TYPE symsgid VALUE 'ZCM_INCIDENT',
+        msgno TYPE symsgno VALUE '003',
+        attr1 TYPE scx_attrname VALUE '',
+        attr2 TYPE scx_attrname VALUE '',
+        attr3 TYPE scx_attrname VALUE '',
+        attr4 TYPE scx_attrname VALUE '',
+      END OF enter_priority,
+
+      BEGIN OF priority_unkown,
+        msgid TYPE symsgid VALUE 'ZCM_INCIDENT',
+        msgno TYPE symsgno VALUE '004',
+        attr1 TYPE scx_attrname VALUE '',
+        attr2 TYPE scx_attrname VALUE '',
+        attr3 TYPE scx_attrname VALUE '',
+        attr4 TYPE scx_attrname VALUE '',
+      END OF priority_unkown,
+
+      BEGIN OF enter_status,
+        msgid TYPE symsgid VALUE 'ZCM_INCIDENT',
+        msgno TYPE symsgno VALUE '005',
+        attr1 TYPE scx_attrname VALUE '',
+        attr2 TYPE scx_attrname VALUE '',
+        attr3 TYPE scx_attrname VALUE '',
+        attr4 TYPE scx_attrname VALUE '',
+      END OF enter_status,
+
+ BEGIN OF status_unkown,
+        msgid TYPE symsgid VALUE 'ZCM_INCIDENT',
+        msgno TYPE symsgno VALUE '006',
+        attr1 TYPE scx_attrname VALUE '',
+        attr2 TYPE scx_attrname VALUE '',
+        attr3 TYPE scx_attrname VALUE '',
+        attr4 TYPE scx_attrname VALUE '',
+      END OF status_unkown,
+
+
+      BEGIN OF enter_create_date,
+        msgid TYPE symsgid VALUE 'ZCM_INCIDENT',
+        msgno TYPE symsgno VALUE '007',
+        attr1 TYPE scx_attrname VALUE '',
+        attr2 TYPE scx_attrname VALUE '',
+        attr3 TYPE scx_attrname VALUE '',
+        attr4 TYPE scx_attrname VALUE '',
+      END OF enter_create_date,
+
+      BEGIN OF enter_change_date,
+        msgid TYPE symsgid VALUE 'ZCM_INCIDENT',
+        msgno TYPE symsgno VALUE '008',
+        attr1 TYPE scx_attrname VALUE '',
+        attr2 TYPE scx_attrname VALUE '',
+        attr3 TYPE scx_attrname VALUE '',
+        attr4 TYPE scx_attrname VALUE '',
+      END OF enter_change_date.
+
+
 
 
     METHODS constructor

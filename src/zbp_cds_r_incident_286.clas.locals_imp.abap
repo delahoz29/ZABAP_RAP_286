@@ -142,7 +142,9 @@ CLASS lhc_Incident IMPLEMENTATION.
       ELSE.
         result-%create          = if_abap_behv=>auth-unauthorized.
 
-        " AQUI VA MENSAJE DE ERROR DE AUTORIZACIÓN
+        APPEND VALUE #( %msg    = NEW zcl_mensajes_286( textid   = zcl_mensajes_286=>not_authorized
+                                                         severity =  if_abap_behv_message=>severity-error )
+                       %global = if_abap_behv=>mk-on ) TO reported-incident.
       ENDIF.
 
     ENDIF.
@@ -156,7 +158,10 @@ CLASS lhc_Incident IMPLEMENTATION.
       ELSE.
         result-%update          = if_abap_behv=>auth-unauthorized.
         result-%action-edit     = if_abap_behv=>auth-unauthorized.
-        " AQUI VA MENSAJE DE ERROR DE AUTORIZACIÓN
+
+        APPEND VALUE #( %msg    = NEW zcl_mensajes_286( textid   = zcl_mensajes_286=>not_authorized
+                                                                  severity =  if_abap_behv_message=>severity-error )
+                                %global = if_abap_behv=>mk-on ) TO reported-incident.
       ENDIF.
 
 
@@ -168,7 +173,11 @@ CLASS lhc_Incident IMPLEMENTATION.
         result-%delete          = if_abap_behv=>auth-allowed.
       ELSE.
         result-%delete          = if_abap_behv=>auth-unauthorized.
-        " AQUI VA MENSAJE DE ERROR DE AUTORIZACIÓN
+
+        APPEND VALUE #( %msg    = NEW zcl_mensajes_286( textid   = zcl_mensajes_286=>not_authorized
+                                                          severity =  if_abap_behv_message=>severity-error )
+                        %global = if_abap_behv=>mk-on ) TO reported-incident.
+
       ENDIF.
 
     ENDIF.
@@ -269,12 +278,24 @@ CLASS lhc_Incident IMPLEMENTATION.
 
     ENDIF.
 
-    LOOP AT priorities INTO DATA(priority).
+    LOOP AT incidents INTO DATA(incident).
 
-      IF priority-priority_code IS INITIAL.
-        " MENSAJE DE EXISTE!
-      ELSEIF priority-priority_code IS NOT INITIAL AND NOT line_exists( valid_priorities[ priority_code = priority-priority_code ] ).
-        " MENSAJE DE NO EXISTE
+      IF incident-Priority IS INITIAL.
+        APPEND VALUE #( %tky        = incident-%tky ) TO failed-incident.
+        APPEND VALUE #( %tky        =  incident-%tky
+                        %state_area = 'VALIDATE_PRIORITY'
+                        %msg        = NEW zcl_mensajes_286( textid   = zcl_mensajes_286=>enter_priority
+                                                            severity =  if_abap_behv_message=>severity-error )
+                        %element-Priority =  if_abap_behv=>mk-on
+                        ) TO reported-incident.
+      ELSEIF incident-Priority IS NOT INITIAL AND NOT line_exists( valid_priorities[ priority_code = incident-Priority ] ).
+        APPEND VALUE #( %tky        = incident-%tky ) TO failed-incident.
+        APPEND VALUE #( %tky        = incident-%tky
+                        %state_area = 'VALIDATE_PRIORITY'
+                        %msg        = NEW zcl_mensajes_286( textid   = zcl_mensajes_286=>priority_unkown
+                                                                   severity =  if_abap_behv_message=>severity-error )
+                        %element-Priority =  if_abap_behv=>mk-on
+                       ) TO reported-incident.
       ENDIF.
 
     ENDLOOP.
@@ -282,9 +303,113 @@ CLASS lhc_Incident IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD validateRange.
+
+    READ ENTITIES OF zcds_r_incident_286 IN LOCAL MODE
+             ENTITY Incident
+             FIELDS ( CreationDate
+                      ChangedDate )
+             WITH CORRESPONDING #( keys )
+             RESULT DATA(incidents).
+*
+
+    LOOP AT incidents INTO DATA(incident).
+
+      IF incident-CreationDate IS INITIAL.
+        APPEND VALUE #( %tky = incident-%tky ) TO failed-incident.
+        APPEND VALUE #( %tky        = incident-%tky
+                        %state_area = 'VALIDATE_DATES'
+                        %msg        = NEW zcl_mensajes_286( textid   = zcl_mensajes_286=>enter_create_date
+                                                                   severity =  if_abap_behv_message=>severity-error )
+                        %element-CreationDate =  if_abap_behv=>mk-on
+                        ) TO reported-incident.
+
+      ENDIF.
+
+      IF incident-ChangedDate IS INITIAL.
+        APPEND VALUE #( %tky        = incident-%tky ) TO failed-incident.
+        APPEND VALUE #( %tky        = incident-%tky
+                        %state_area = 'VALIDATE_DATES'
+                        %msg        = NEW zcl_mensajes_286( textid   = zcl_mensajes_286=>enter_change_date
+                                                                   severity =  if_abap_behv_message=>severity-error )
+                        %element-ChangedDate =  if_abap_behv=>mk-on
+                        ) TO reported-incident.
+
+      ENDIF.
+
+      IF incident-ChangedDate < incident-CreationDate AND incident-CreationDate IS NOT  INITIAL
+                                           AND incident-ChangedDate IS NOT  INITIAL.
+        APPEND VALUE #( %tky        = incident-%tky ) TO failed-incident.
+        APPEND VALUE #( %tky        = incident-%tky
+                        %state_area = 'VALIDATE_DATES'
+                        %msg        = NEW zcl_mensajes_286( textid     = zcl_mensajes_286=>enter_create_date
+                                                                   "created_date = incident-CreationDate
+                                                                  " changed_date   = incident-ChangedDate
+                                                                   severity   =  if_abap_behv_message=>severity-error )
+                        %element-CreationDate =  if_abap_behv=>mk-on
+                        %element-ChangedDate =  if_abap_behv=>mk-on
+                        ) TO reported-incident.
+
+      ENDIF.
+
+      IF incident-CreationDate < cl_abap_context_info=>get_system_date(  ) AND incident-CreationDate IS NOT  INITIAL.
+        APPEND VALUE #( %tky        = incident-%tky ) TO failed-incident.
+        APPEND VALUE #( %tky        = incident-%tky
+                        %state_area = 'VALIDATE_DATES'
+                        %msg        = NEW zcl_mensajes_286( textid   = zcl_mensajes_286=>enter_create_date
+                                                                   severity =  if_abap_behv_message=>severity-error )
+                        %element-CreationDate =  if_abap_behv=>mk-on
+                         ) TO reported-incident.
+
+      ENDIF.
+
+    ENDLOOP.
+
+
   ENDMETHOD.
 
   METHOD validateStatus.
+
+    READ ENTITIES OF zcds_r_incident_286 IN LOCAL MODE
+               ENTITY Incident
+               FIELDS ( Status )
+               WITH CORRESPONDING #( keys )
+               RESULT DATA(incidents).
+
+    DATA status TYPE SORTED TABLE OF zdt_status286 WITH UNIQUE KEY client status_code .
+
+    status = CORRESPONDING #( incidents DISCARDING DUPLICATES MAPPING status_code = Status EXCEPT * ).
+    DELETE status WHERE status_code IS INITIAL.
+
+    IF status IS NOT INITIAL.
+      SELECT FROM zdt_status286 AS ddbb
+      INNER JOIN @status AS http_req ON ddbb~status_code EQ http_req~status_code
+      FIELDS ddbb~status_code
+      INTO TABLE @DATA(valid_status).
+
+    ENDIF.
+
+    LOOP AT incidents INTO DATA(incident).
+
+      IF incident-Status IS INITIAL.
+        APPEND VALUE #( %tky        = incident-%tky ) TO failed-incident.
+        APPEND VALUE #( %tky        =  incident-%tky
+                        %state_area = 'VALIDATE_STATUS'
+                        %msg        = NEW zcl_mensajes_286( textid   = zcl_mensajes_286=>enter_status
+                                                            severity =  if_abap_behv_message=>severity-error )
+                        %element-Status =  if_abap_behv=>mk-on
+                        ) TO reported-incident.
+      ELSEIF incident-Status IS NOT INITIAL AND NOT line_exists( valid_status[ status_code = incident-Status ] ).
+        APPEND VALUE #( %tky        = incident-%tky ) TO failed-incident.
+        APPEND VALUE #( %tky        = incident-%tky
+                        %state_area = 'VALIDATE_STATUS'
+                        %msg        = NEW zcl_mensajes_286( textid   = zcl_mensajes_286=>status_unkown
+                                                                   severity =  if_abap_behv_message=>severity-error )
+                        %element-Status =  if_abap_behv=>mk-on
+                       ) TO reported-incident.
+      ENDIF.
+
+    ENDLOOP.
+
   ENDMETHOD.
 
 ENDCLASS.

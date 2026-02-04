@@ -12,7 +12,49 @@
      <SPRSL>E</SPRSL>
      <ARBGB>ZCM_INCIDENT</ARBGB>
      <MSGNR>001</MSGNR>
-     <TEXT>No existe la prioridad</TEXT>
+     <TEXT>No existe el</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZCM_INCIDENT</ARBGB>
+     <MSGNR>002</MSGNR>
+     <TEXT>No autorizado para realizar esta actividad</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZCM_INCIDENT</ARBGB>
+     <MSGNR>003</MSGNR>
+     <TEXT>Error en la prioridad</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZCM_INCIDENT</ARBGB>
+     <MSGNR>004</MSGNR>
+     <TEXT>Prioridad desconocida</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZCM_INCIDENT</ARBGB>
+     <MSGNR>005</MSGNR>
+     <TEXT>Error en el estado</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZCM_INCIDENT</ARBGB>
+     <MSGNR>006</MSGNR>
+     <TEXT>Estado desconocido</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZCM_INCIDENT</ARBGB>
+     <MSGNR>007</MSGNR>
+     <TEXT>Error en la fecha de creación</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZCM_INCIDENT</ARBGB>
+     <MSGNR>008</MSGNR>
+     <TEXT>Error en el cambio de fecha</TEXT>
     </T100>
    </T100>
   </asx:values>
