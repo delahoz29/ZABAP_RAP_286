@@ -5,7 +5,7 @@ define root view entity ZCDS_I_INCIDENT_286
 provider contract transactional_interface
 as projection on ZCDS_R_INCIDENT_286
 {
-    key IncUuid,
+    key Incuuid,
     IncidentId,
     Title,
     Description,
@@ -20,8 +20,9 @@ as projection on ZCDS_R_INCIDENT_286
     LastChangedAt,
     /* Associations */
     _Priority,
-    _Status,
-    _History : redirected to composition child ZCDS_02_CHILD_286
+    _Status
+    //,
+    //_History : redirected to composition child ZCDS_02_CHILD_286
     
      
 }

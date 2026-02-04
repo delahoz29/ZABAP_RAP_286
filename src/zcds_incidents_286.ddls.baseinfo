@@ -3,13 +3,10 @@
 {
 "FROM":
 [
-"ZDT_INCT_H_286"
+"ZDT_INCT_286"
 ],
 "ASSOCIATED":
-[
-"ZCDS_R_INCIDENT_286",
-"ZDT_STATUS286"
-],
+[],
 "BASE":
 [],
 "ANNO_REF":

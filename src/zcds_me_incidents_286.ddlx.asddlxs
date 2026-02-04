@@ -3,7 +3,6 @@
                      typeNamePlural: 'Incidents',
                      title: { type: #STANDARD,
                               value: 'IncidentId'  } } ,
-
        presentationVariant: [{ sortOrder: [{ by : 'IncidentId',
                                              direction: #DESC }],
                                visualizations: [{ type: #AS_LINEITEM }] }] }
@@ -16,59 +15,73 @@ annotate entity ZCDS_C_INCIDENT_286 with
                 label: 'Incident Master Data',
                 position: 10 }]
   @Consumption.valueHelpDefinition: [{ entity: { name: 'ZCDS_INCUUID_VH',
-                                                 element: 'IncUuid'}  }]
+                                               element: 'IncUuid'}  }]
+@UI.hidden: true                                              
   Incuuid;
-  @UI.lineItem: [{ position: 10,
-                   importance: #HIGH,
-                   label: 'Incident ID' }]
-  @UI.selectionField: [{ position: 10 }]
-  @UI.identification: [{ position: 10 }]
-  IncidentId;
-
   @UI.lineItem: [{ position: 20,
+                   importance: #HIGH ,
+                   label: 'Incident ID' }]
+  @UI.selectionField: [{ position: 20 }]
+  @UI.identification: [{ position: 20 },
+                       { label: 'Incident ID' } ]
+  IncidentId;
+    @UI.lineItem: [{ position: 30,
+                   importance: #HIGH ,
+                   label: 'Title' }]
+  //@UI.selectionField: [{ position: 30 }]
+  @UI.identification: [{ position: 30 },
+                     { label: 'Title' } ]
+  Title;
+  @UI.lineItem: [{ position: 40,
                    importance: #HIGH,
                    label: 'Incident Description' }]
-  @UI.selectionField: [{ position: 20 }]
-  @UI.identification: [{ position: 20 }]
+  @UI.selectionField: [{ position: 40 }]
+  @UI.identification: [{ position: 40 },
+                       { label: 'Description' } ]
   Description;
 
-  @UI.lineItem: [{ position: 30,
+  @UI.lineItem: [{ position: 50,
                    importance: #HIGH,
                    label: 'Incident Status' },
                  { type: #FOR_ACTION,
                    dataAction: 'NewStatus',
                    label: 'NewStatus',
                    position: 10 }]
-  @UI.selectionField: [{ position: 30 }]
+  @UI.selectionField: [{ position: 50 }]
   @Consumption.valueHelpDefinition: [{ entity: { name : 'ZCDS_STATUS_286',
                                                  element: 'StatusCode' },
                                        useForValidation: true }]
-  @UI.identification: [{ position: 30 },
+  @UI.identification: [{ position: 50 },
                        { type: #FOR_ACTION,
                                        dataAction: 'NewStatus',
                                        label: 'NewStatus',
-                                       position: 10 }]
+                                       position: 10 },
+                       { label: 'Status' } ]
+
   Status;
-  @UI.lineItem: [{ position: 40,
+  @UI.lineItem: [{ position: 60,
                    importance: #HIGH,
                    label: 'Incident Priority' }]
-  @UI.selectionField: [{ position: 40 }]
+  @UI.selectionField: [{ position: 60 }]
   @Consumption.valueHelpDefinition: [{ entity: { name : 'ZCDS_PRIORITY_286',
                                                  element: 'PriorityCode'} ,
                                        useForValidation: true }]
-  @UI.identification: [{ position: 40 }]
+  @UI.identification: [{ position: 60 },
+                       { label: 'Priority' } ]
   Priority;
 
-  @UI.lineItem: [{ position: 50,
+  @UI.lineItem: [{ position: 70,
                    importance: #MEDIUM,
                    label: 'Creation Date' }]
-  @UI.selectionField: [{ position: 50 }]
-  @UI.identification: [{ position: 50 }]
+  @UI.selectionField: [{ position: 70 }]
+  @UI.identification: [{ position: 70 },
+                       { label: 'Creation Date' } ]
   CreationDate;
-  @UI.lineItem: [{ position: 60,
+  @UI.lineItem: [{ position: 80,
                    importance: #MEDIUM,
                    label: 'Changed Date' }]
-  @UI.selectionField: [{ position: 60 }]
-  @UI.identification: [{ position: 60 }]
+  @UI.selectionField: [{ position: 80 }]
+  @UI.identification: [{ position: 80 },
+                       { label: 'Changed Date' } ]
   ChangedDate;
 }

@@ -1,10 +1,11 @@
 managed implementation in class zbp_cds_r_incident_286 unique;
 strict ( 2 );
-//with draft;
+with draft;
 define behavior for ZCDS_R_INCIDENT_286 alias Incident
 persistent table zdt_inct_286
+draft table zdt_inct_286_d
 lock master
-//total etag LastChangedAt
+total etag LastChangedAt
 etag master LocalLastChangedAt
 authorization master ( global, instance )
 //etag master <field_name>
@@ -13,16 +14,17 @@ authorization master ( global, instance )
   update;
   delete;
   field ( numbering : managed, readonly ) IncUuid;
+
   field ( readonly ) IncidentId,
   LastChangedAt,
   LocalCreatedAt,
   LocalCreatedBy,
   LocalLastChangedAt,
   LocalLastChangedBy;
-  field ( mandatory ) Description, Priority, Status, CreationDate, ChangedDate;
+  field ( mandatory ) Title, Description, Priority, Status, CreationDate, ChangedDate;
 
 
-  association _History { create; }
+  //association _History { create; }
 
   action ( features : instance, authorization : update ) NewStatus parameter zcds_ae_incidents_286 result [1] $self;
 
@@ -46,7 +48,19 @@ authorization master ( global, instance )
 
   }
 
-  mapping for zdt_inct_286
+   draft action Resume;
+   draft action Edit;
+   draft action Activate optimized;
+   draft action Discard;
+
+   draft determine action Prepare {
+   validation validateStatus;
+   validation validatePriority;
+   validation validateRange;
+
+   }
+
+   mapping for zdt_inct_286
     {
       Incuuid            = inc_uuid;
       IncidentId         = incident_id;
@@ -64,28 +78,29 @@ authorization master ( global, instance )
     }
 }
 
-define behavior for ZCDS_01_History_286 //alias <alias_name>
-persistent table zdt_inct_h_286
-lock dependent by _Incident
-authorization dependent by _Incident
-//etag master <field_name>
-{
-  update;
-  delete;
-  field ( readonly ) HisUuid, IncUuid;
-  association _Incident;
-  mapping for zdt_inct_h_286
-    {
-      HisUuid            = his_uuid;
-      IncUuid            = inc_uuid;
-      HisId              = his_id;
-      PreviousStatus     = previous_status;
-      NewStatus          = new_status;
-      text               = Text;
-      LocalCreatedBy     = local_created_by;
-      LocalCreatedAt     = local_created_at;
-      LocalLastChangedBy = local_last_changed_by;
-      LocalLastChangedAt = local_last_changed_at;
-      LastChangedAt      = last_changed_at;
-    }
-}
+//define behavior for ZCDS_INC_HISTORY_286 alias History
+//persistent table zdt_inct_h_286
+//draft table zdt_inct_h_286_d
+//lock dependent by _Incident
+//authorization dependent by _Incident
+//etag master LocalLastChangedAt
+//{
+//  update;
+ // delete;
+ // field (numbering : managed, readonly ) HisUuid;
+ // association _Inciden {with draft;}
+ // mapping for zdt_inct_h_286
+  //  {
+   //   HisUuid            = his_uuid;
+    //  IncUuid            = inc_uuid;
+     // HisId              = his_id;
+     // PreviousStatus     = previous_status;
+     // NewStatus          = new_status;
+     // text               = Text;
+     // LocalCreatedBy     = local_created_by;
+     // LocalCreatedAt     = local_created_at;
+     // LocalLastChangedBy = local_last_changed_by;
+     /// LocalLastChangedAt = local_last_changed_at;
+     // LastChangedAt      = last_changed_at;
+   // }
+//}

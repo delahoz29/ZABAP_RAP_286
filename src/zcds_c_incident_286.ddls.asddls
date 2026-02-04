@@ -40,7 +40,7 @@ define root view entity ZCDS_C_INCIDENT_286
       @Semantics.systemDateTime.lastChangedAt: true
       LastChangedAt,
       /* Associations */
-      _History : redirected to composition child ZCDS_04_CHILD_286,
+    //  _History,// : redirected to composition child ZCDS_04_CHILD_286,
       _Priority,
       _Status
 }
