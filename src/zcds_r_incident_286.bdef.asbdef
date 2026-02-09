@@ -8,7 +8,6 @@ lock master
 total etag LastChangedAt
 etag master LocalLastChangedAt
 authorization master ( global, instance )
-//etag master <field_name>
 {
   create ( authorization : global );
   update;
@@ -16,51 +15,67 @@ authorization master ( global, instance )
   field ( numbering : managed, readonly ) IncUuid;
 
   field ( readonly ) IncidentId,
+
   LastChangedAt,
   LocalCreatedAt,
   LocalCreatedBy,
   LocalLastChangedAt,
   LocalLastChangedBy;
-  field ( mandatory ) Title, Description, Priority, Status, CreationDate, ChangedDate;
 
-
-  //association _History { create; }
+//  field ( mandatory : create ) Title, Status, Priority;
+//
+//  field ( mandatory : update ) Title, Status, Priority;
+  association _History { create ( features : instance ); with draft; }
 
   action ( features : instance, authorization : update ) NewStatus parameter zcds_ae_incidents_286 result [1] $self;
 
+
+  determination createInitialHistory on save { create; }
+
   internal action ChangeStatus;
+  internal action setHistoryInc;
 
   validation validateStatus on save { create; field Status; }
   validation validatePriority on save { create; field Priority; }
+  validation validateDescrip on save { create; field Description; }
   validation validateRange on save { create; field CreationDate, ChangedDate; }
 
   determination setIncidentNumber on save { create; }
   determination setStatusOpen on modify { create; }
+  determination createlHistory on save { create; }
 
   determine action validateStatusCode { validation validateStatus; }
   determine action validatePriorityCode { validation validatePriority; }
+  determine action validateDescription { validation validateDescrip; }
   determine action validateDates { validation validateRange; }
 
-  side effects {
+
+  side effects
+  {
     determine action validateStatusCode executed on field Status affects messages;
     determine action validatePriorityCode executed on field Priority affects messages;
+    determine action validateDescription executed on field Description affects messages;
     determine action validateDates executed on field CreationDate, field ChangedDate affects messages;
 
   }
 
-   draft action Resume;
-   draft action Edit;
-   draft action Activate optimized;
-   draft action Discard;
+  draft action Resume;
+  draft action Edit;
+  draft action Activate optimized;
+  draft action Discard;
 
-   draft determine action Prepare {
-   validation validateStatus;
-   validation validatePriority;
-   validation validateRange;
+  draft determine action Prepare
+  {
+    validation validateStatus;
+    validation validatePriority;
+    validation validateRange;
 
-   }
+  }
 
-   mapping for zdt_inct_286
+
+
+
+  mapping for zdt_inct_286
     {
       Incuuid            = inc_uuid;
       IncidentId         = incident_id;
@@ -78,29 +93,39 @@ authorization master ( global, instance )
     }
 }
 
-//define behavior for ZCDS_INC_HISTORY_286 alias History
-//persistent table zdt_inct_h_286
-//draft table zdt_inct_h_286_d
-//lock dependent by _Incident
-//authorization dependent by _Incident
-//etag master LocalLastChangedAt
-//{
-//  update;
- // delete;
- // field (numbering : managed, readonly ) HisUuid;
- // association _Inciden {with draft;}
- // mapping for zdt_inct_h_286
-  //  {
-   //   HisUuid            = his_uuid;
-    //  IncUuid            = inc_uuid;
-     // HisId              = his_id;
-     // PreviousStatus     = previous_status;
-     // NewStatus          = new_status;
-     // text               = Text;
-     // LocalCreatedBy     = local_created_by;
-     // LocalCreatedAt     = local_created_at;
-     // LocalLastChangedBy = local_last_changed_by;
-     /// LocalLastChangedAt = local_last_changed_at;
-     // LastChangedAt      = last_changed_at;
-   // }
-//}
+define behavior for ZCDS_INC_HISTORY_286 alias History
+persistent table zdt_inct_h_286
+draft table zdt_inct_h_286_d
+lock dependent by _Incident
+authorization dependent by _Incident
+etag master LocalLastChangedAt
+{
+  update;
+  delete;
+  field ( numbering : managed, readonly ) HisUuid;
+  field ( readonly )
+  IncUuid,
+  LocalCreatedBy,
+  LocalCreatedAt,
+  LocalLastChangedBy,
+  LocalLastChangedAt,
+  LastChangedAt;
+
+
+
+  association _Incident { with draft; }
+  mapping for zdt_inct_h_286
+    {
+      HisUuid            = his_uuid;
+      IncUuid            = inc_uuid;
+      HisId              = his_id;
+      PreviousStatus     = previous_status;
+      NewStatus          = new_status;
+      text               = Text;
+      LocalCreatedBy     = local_created_by;
+      LocalCreatedAt     = local_created_at;
+      LocalLastChangedBy = local_last_changed_by;
+      LocalLastChangedAt = local_last_changed_at;
+      LastChangedAt      = last_changed_at;
+    }
+}

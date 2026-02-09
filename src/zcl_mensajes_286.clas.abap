@@ -84,7 +84,17 @@ CLASS zcl_mensajes_286 DEFINITION
         attr2 TYPE scx_attrname VALUE '',
         attr3 TYPE scx_attrname VALUE '',
         attr4 TYPE scx_attrname VALUE '',
-      END OF enter_change_date.
+      END OF enter_change_date,
+
+       BEGIN OF enter_description,
+        msgid TYPE symsgid VALUE 'ZCM_INCIDENT',
+        msgno TYPE symsgno VALUE '009',
+        attr1 TYPE scx_attrname VALUE '',
+        attr2 TYPE scx_attrname VALUE '',
+        attr3 TYPE scx_attrname VALUE '',
+        attr4 TYPE scx_attrname VALUE '',
+      END OF enter_description.
+
 
 
 

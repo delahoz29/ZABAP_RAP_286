@@ -7,7 +7,7 @@ CLASS zcl_carga_data_286 DEFINITION
     INTERFACES if_oo_adt_classrun.
 
     DATA: lt_status   TYPE TABLE OF zdt_status286,
-          lt_priority TYPE TABLE OF zdt_priority_286.
+          lt_priority TYPE TABLE OF zdt_priority286.
   PROTECTED SECTION.
   PRIVATE SECTION.
 ENDCLASS.
@@ -19,6 +19,7 @@ CLASS zcl_carga_data_286 IMPLEMENTATION.
 
     DELETE FROM zdt_status286.
     DELETE FROM zdt_priority286.
+    delete from zdt_inct_286.
 
     lt_status = VALUE #(
         ( status_code = 'OP' status_description = 'Open' )

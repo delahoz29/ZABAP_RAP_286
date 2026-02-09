@@ -3,7 +3,7 @@
 @Metadata.ignorePropagatedAnnotations: true
 define root view entity ZCDS_R_INCIDENT_286
   as select from zdt_inct_286
- // composition [0..*] of ZCDS_01_History_286 as _History
+  composition [0..*] of ZCDS_INC_HISTORY_286 as _History
 
   association [1..1] to zdt_status286      as _Status   on $projection.Status = _Status.status_code
   association [1..1] to zdt_priority286    as _Priority on $projection.Priority = _Priority.priority_code
@@ -29,7 +29,7 @@ define root view entity ZCDS_R_INCIDENT_286
       local_last_changed_at   as LocalLastChangedAt,
       @Semantics.systemDateTime.lastChangedAt: true
       last_changed_at         as LastChangedAt,
-     // _History, // Make association public
+      _History, // Make association public
       _Status,
       _Priority
 }

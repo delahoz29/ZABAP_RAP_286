@@ -9,7 +9,7 @@
 }
 @Search.searchable: true
 define view entity zcds_priority_286
-  as select from zdt_priority_286
+  as select from zdt_priority286
 {
       @ UI.textArrangement: #TEXT_ONLY
       @UI.lineItem: [{importance: #HIGH}]

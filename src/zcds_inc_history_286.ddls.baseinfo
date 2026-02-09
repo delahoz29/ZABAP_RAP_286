@@ -3,10 +3,12 @@
 {
 "FROM":
 [
-"ZDT_PRIORITY286"
+"ZDT_INCT_H_286"
 ],
 "ASSOCIATED":
-[],
+[
+"ZCDS_R_INCIDENT_286"
+],
 "BASE":
 [],
 "ANNO_REF":
