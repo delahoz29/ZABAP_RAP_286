@@ -35,6 +35,7 @@ define root view entity ZCDS_C_INCIDENT_286
       CreationDate,
       @Search.defaultSearchElement: true
       ChangedDate,
+      Responsable, 
       @Semantics.systemDateTime.localInstanceLastChangedAt: true
       LocalLastChangedAt,
       @Semantics.systemDateTime.lastChangedAt: true

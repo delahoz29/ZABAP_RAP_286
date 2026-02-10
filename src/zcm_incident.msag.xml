@@ -12,7 +12,7 @@
      <SPRSL>E</SPRSL>
      <ARBGB>ZCM_INCIDENT</ARBGB>
      <MSGNR>001</MSGNR>
-     <TEXT>No existe el</TEXT>
+     <TEXT>El titulo es obligatorio</TEXT>
     </T100>
     <T100>
      <SPRSL>E</SPRSL>
@@ -61,6 +61,12 @@
      <ARBGB>ZCM_INCIDENT</ARBGB>
      <MSGNR>009</MSGNR>
      <TEXT>La descripción es obligatoria</TEXT>
+    </T100>
+    <T100>
+     <SPRSL>E</SPRSL>
+     <ARBGB>ZCM_INCIDENT</ARBGB>
+     <MSGNR>010</MSGNR>
+     <TEXT>El responsable es requerido</TEXT>
     </T100>
    </T100>
   </asx:values>

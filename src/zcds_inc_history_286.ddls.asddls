@@ -12,6 +12,7 @@ define view entity ZCDS_INC_HISTORY_286
   association to parent ZCDS_R_INCIDENT_286 as _Incident on $projection.IncUuid = _Incident.Incuuid
 {
   key his_uuid              as HisUuid,
+      @ObjectModel.foreignKey.association: '_Incident'
       inc_uuid              as IncUuid,
       his_id                as HisId,
       previous_status       as PreviousStatus,
@@ -29,7 +30,7 @@ define view entity ZCDS_INC_HISTORY_286
       last_changed_at       as LastChangedAt,
 
       _Incident
-      
+
 
 
 }

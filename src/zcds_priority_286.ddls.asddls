@@ -2,11 +2,15 @@
 @AccessControl.authorizationCheck: #NOT_REQUIRED
 @EndUserText.label: 'CDS Priority'
 @Metadata.ignorePropagatedAnnotations: true
+@ObjectModel.dataCategory: #VALUE_HELP
+@ObjectModel.representativeKey: 'PriorityCode'
 @ObjectModel.usageType:{
     serviceQuality: #X,
     sizeCategory: #S,
-    dataClass: #MIXED
+    dataClass: #CUSTOMIZING
 }
+@ObjectModel.resultSet.sizeCategory: #XS
+@VDM.viewType: #COMPOSITE
 @Search.searchable: true
 define view entity zcds_priority_286
   as select from zdt_priority286

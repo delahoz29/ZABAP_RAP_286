@@ -7,7 +7,8 @@ CLASS zcl_carga_data_286 DEFINITION
     INTERFACES if_oo_adt_classrun.
 
     DATA: lt_status   TYPE TABLE OF zdt_status286,
-          lt_priority TYPE TABLE OF zdt_priority286.
+          lt_priority TYPE TABLE OF zdt_priority286,
+          lt_users TYPE TABLE OF zdt_user_286.
   PROTECTED SECTION.
   PRIVATE SECTION.
 ENDCLASS.
@@ -19,7 +20,8 @@ CLASS zcl_carga_data_286 IMPLEMENTATION.
 
     DELETE FROM zdt_status286.
     DELETE FROM zdt_priority286.
-    delete from zdt_inct_286.
+    DELETE FROM zdt_user_286.
+
 
     lt_status = VALUE #(
         ( status_code = 'OP' status_description = 'Open' )
@@ -53,7 +55,19 @@ CLASS zcl_carga_data_286 IMPLEMENTATION.
       out->write( | Error al cargar prioridades.| ).
     ENDIF.
 
+lt_users = VALUE #(
+      ( user_id = 'CB9980000286' user_name = 'Administrador' )
+      ( user_id = 'CB9800001722' user_name = 'Usuario 1' )
+      ( user_id = 'CB9800001723' user_name = 'Usuario 2' )
+      ( user_id = 'CB9800001724' user_name = 'Usuario 3'  )
+    ).
+    INSERT zdt_user_286 FROM TABLE @lt_users.
 
+     IF sy-subrc EQ 0.
+      out->write( | Total usuarios cargados satisfactoriamente: { sy-dbcnt } .| ).
+    ELSE.
+      out->write( | Error al cargar usuarios.| ).
+    ENDIF.
   ENDMETHOD.
 
 ENDCLASS.

@@ -14,50 +14,40 @@ authorization master ( global, instance )
   delete;
   field ( numbering : managed, readonly ) IncUuid;
 
-  field ( readonly ) IncidentId,
-
+  field ( readonly )
+  IncidentId,
+  CreationDate,
   LastChangedAt,
   LocalCreatedAt,
   LocalCreatedBy,
   LocalLastChangedAt,
   LocalLastChangedBy;
 
-//  field ( mandatory : create ) Title, Status, Priority;
-//
-//  field ( mandatory : update ) Title, Status, Priority;
+  field ( mandatory : create ) Title, Description, Priority, Status;
+  //
+  //  field ( mandatory : update ) Title, Status, Priority;
   association _History { create ( features : instance ); with draft; }
 
-  action ( features : instance, authorization : update ) NewStatus parameter zcds_ae_incidents_286 result [1] $self;
+  determination setValuesInitial on modify { create; }
 
+  determination setHistoryInitial on save { create; }
+
+  determination setChangeDate on save { update; create; }
 
   determination createInitialHistory on save { create; }
 
-  internal action ChangeStatus;
+
+  action ( features : instance, authorization : update ) NewStatus parameter ZCDS_NEW_STATUS_286 result [1] $self;
+
   internal action setHistoryInc;
 
-  validation validateStatus on save { create; field Status; }
-  validation validatePriority on save { create; field Priority; }
-  validation validateDescrip on save { create; field Description; }
-  validation validateRange on save { create; field CreationDate, ChangedDate; }
-
-  determination setIncidentNumber on save { create; }
-  determination setStatusOpen on modify { create; }
-  determination createlHistory on save { create; }
-
-  determine action validateStatusCode { validation validateStatus; }
-  determine action validatePriorityCode { validation validatePriority; }
-  determine action validateDescription { validation validateDescrip; }
-  determine action validateDates { validation validateRange; }
-
-
   side effects
-  {
-    determine action validateStatusCode executed on field Status affects messages;
-    determine action validatePriorityCode executed on field Priority affects messages;
-    determine action validateDescription executed on field Description affects messages;
-    determine action validateDates executed on field CreationDate, field ChangedDate affects messages;
-
+  { action NewStatus affects $self;
   }
+
+  validation validaCamposObligatorios on save { update; create; }
+
+  determine action validaCamposMandatorios { validation validaCamposObligatorios; }
 
   draft action Resume;
   draft action Edit;
@@ -66,14 +56,9 @@ authorization master ( global, instance )
 
   draft determine action Prepare
   {
-    validation validateStatus;
-    validation validatePriority;
-    validation validateRange;
+    validation validaCamposObligatorios;
 
   }
-
-
-
 
   mapping for zdt_inct_286
     {
@@ -85,6 +70,7 @@ authorization master ( global, instance )
       Priority           = priority;
       CreationDate       = creation_date;
       ChangedDate        = changed_date;
+      Responsable        = responsable;
       LocalCreatedBy     = local_created_by;
       LocalCreatedAt     = local_created_at;
       LocalLastChangedBy = local_last_changed_by;

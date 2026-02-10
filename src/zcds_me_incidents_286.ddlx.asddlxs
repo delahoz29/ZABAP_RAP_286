@@ -84,4 +84,18 @@ annotate entity ZCDS_C_INCIDENT_286 with
   @UI.identification: [{ position: 80 },
                        { label: 'Changed Date' } ]
   ChangedDate;
+    @UI.lineItem: [{ position: 90,
+                   importance: #MEDIUM,
+                   label:'Responsable' }]
+  @UI.selectionField: [{ position: 90 }]
+  @UI.identification: [{ position: 90 },
+                       { label: 'Responsable' } ]
+  Responsable;
+ 
+  @UI.hidden: true
+  LocalLastChangedAt;
+  @UI.hidden: true
+  LastChangedAt;
+  @UI.hidden: true
+  _History;
 }

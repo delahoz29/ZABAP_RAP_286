@@ -2,11 +2,14 @@
 @AccessControl.authorizationCheck: #NOT_REQUIRED
 @EndUserText.label: 'CDS Status'
 @Metadata.ignorePropagatedAnnotations: true
+@ObjectModel.representativeKey: 'StatusCode'
 @ObjectModel.usageType:{
     serviceQuality: #X,
     sizeCategory: #S,
-    dataClass: #MIXED
+    dataClass: #CUSTOMIZING
 }
+@ObjectModel.resultSet.sizeCategory: #XS
+@VDM.viewType: #COMPOSITE
 @Search.searchable: true
 define view entity ZCDS_STATUS_286
   as select from zdt_status286
